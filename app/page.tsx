@@ -13,10 +13,35 @@ import SMSPage from "./components/sms-page"
 import AskBreezyPage from "./components/ask-breezy-page"
 import BreezyAdsPage from "./components/breezy-ads-page"
 import BreezyCampaignsPage from "./components/breezy-campaigns-page"
+import SubscriptionBanner from "./components/subscription-banner"
+import TrialSignupPage from "./components/trial-signup-page"
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState("instructions")
   const [activePanel, setActivePanel] = useState<string | null>(null)
+  const [showSubscriptionBanner, setShowSubscriptionBanner] = useState(true)
+  const [userSubscription, setUserSubscription] = useState<any>(null)
+
+  const handleStartTrial = () => {
+    setCurrentPage("trial-signup")
+  }
+
+  const handleStartStripeCheckout = async () => {
+    try {
+      const response = await fetch('/api/stripe/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      
+      const { url } = await response.json()
+      window.location.href = url
+    } catch (error) {
+      console.error('Error creating checkout session:', error)
+    }
+  }
 
   const renderPage = () => {
     switch (currentPage) {
@@ -40,6 +65,8 @@ export default function Dashboard() {
         return <BreezyAdsPage />
       case "breezy-campaigns":
         return <BreezyCampaignsPage />
+      case "trial-signup":
+        return <TrialSignupPage onStartStripeCheckout={handleStartStripeCheckout} />
       default:
         return <InstructionsPage onOpenPanel={setActivePanel} />
     }
@@ -50,6 +77,17 @@ export default function Dashboard() {
       <Sidebar currentPage={currentPage} onPageChange={setCurrentPage} />
       <div className="flex-1 flex flex-col">
         <Header currentPage={currentPage} onPageChange={setCurrentPage} />
+        
+        {/* Subscription Banner */}
+        {showSubscriptionBanner && !userSubscription && currentPage !== "trial-signup" && (
+          <div className="px-6 pt-4">
+            <SubscriptionBanner 
+              onStartTrial={handleStartTrial}
+              onDismiss={() => setShowSubscriptionBanner(false)}
+            />
+          </div>
+        )}
+        
         <main className={`flex-1 overflow-auto transition-all duration-300 ${activePanel ? "brightness-50" : ""}`}>
           {renderPage()}
         </main>

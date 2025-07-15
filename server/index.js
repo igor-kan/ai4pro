@@ -46,6 +46,9 @@ app.use('/api/billing', require('./routes/billing'));
 app.use('/api/twilio', require('./routes/twilio'));
 app.use('/api/stripe', require('./routes/stripe'));
 app.use('/api/users', require('./routes/users'));
+app.use('/api/ask-breezy', require('./routes/askBreezy'));
+app.use('/api/ads', require('./routes/ads'));
+app.use('/api/campaigns', require('./routes/campaigns'));
 
 // Socket.IO for real-time features
 io.on('connection', (socket) => {

@@ -82,18 +82,107 @@ const userSchema = new mongoose.Schema({
   subscription: {
     plan: {
       type: String,
-      enum: ['free', 'basic', 'premium'],
+      enum: ['free', 'essentials', 'premium'],
       default: 'free'
     },
     stripeCustomerId: String,
     stripeSubscriptionId: String,
     status: {
       type: String,
-      enum: ['active', 'canceled', 'past_due', 'unpaid'],
-      default: 'active'
+      enum: ['active', 'canceled', 'past_due', 'unpaid', 'trialing', 'cancel_at_period_end'],
+      default: 'free'
     },
-    currentPeriodEnd: Date
+    currentPeriodStart: Date,
+    currentPeriodEnd: Date,
+    trialStart: Date,
+    trialEnd: Date,
+    cancelAtPeriodEnd: Boolean,
+    lastPayment: Date,
+    lastPaymentFailed: Date,
+    canceledAt: Date
   },
+  
+  // Stripe
+  stripeCustomerId: String,
+  
+  // Phone Number
+  phoneNumber: String,
+  
+  // Features
+  features: {
+    aiReceptionist: { type: Boolean, default: false },
+    unlimitedSMS: { type: Boolean, default: false },
+    callTranscription: { type: Boolean, default: false },
+    crmIntegration: { type: Boolean, default: false },
+    analytics: { type: Boolean, default: false },
+    customGreetings: { type: Boolean, default: false }
+  },
+  
+  // Marketing Campaigns
+  marketingCampaigns: [{
+    id: String,
+    name: String,
+    type: { type: String, enum: ['email', 'sms', 'mixed', 'social'] },
+    status: { type: String, enum: ['draft', 'active', 'paused', 'completed'] },
+    startDate: Date,
+    endDate: Date,
+    targetSegment: String,
+    totalContacts: Number,
+    sentCount: Number,
+    openRate: Number,
+    clickRate: Number,
+    conversionRate: Number,
+    budget: Number,
+    spent: Number,
+    content: {
+      subject: String,
+      message: String,
+      callToAction: String,
+      templates: [String]
+    },
+    schedule: {
+      frequency: { type: String, enum: ['immediate', 'daily', 'weekly', 'monthly'] },
+      time: String,
+      daysOfWeek: [String]
+    },
+    automation: {
+      enabled: Boolean,
+      triggers: [String],
+      followUpActions: [String]
+    },
+    analytics: {
+      sends: [{ date: Date, count: Number }],
+      opens: [{ date: Date, count: Number }],
+      clicks: [{ date: Date, count: Number }],
+      conversions: [{ date: Date, count: Number }]
+    },
+    createdAt: Date,
+    updatedAt: Date
+  }],
+  
+  // Ad Campaigns
+  adCampaigns: [{
+    id: String,
+    name: String,
+    platform: { type: String, enum: ['google', 'facebook', 'instagram', 'linkedin', 'twitter'] },
+    status: { type: String, enum: ['active', 'paused', 'draft', 'completed'] },
+    budget: Number,
+    spent: Number,
+    impressions: Number,
+    clicks: Number,
+    conversions: Number,
+    startDate: Date,
+    endDate: Date,
+    targetAudience: String,
+    adContent: {
+      headline: String,
+      description: String,
+      imageUrl: String,
+      callToAction: String
+    },
+    createdAt: Date,
+    updatedAt: Date
+  }],
   
   // Integrations
   integrations: {
