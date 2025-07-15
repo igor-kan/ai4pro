@@ -72,5 +72,42 @@ components/ # Shared UI components
 lib/ # Utility functions
 public/ # Static assets
 next.config.mjs # Next.js configuration for static export and base path
+```
 package.json # Project dependencies and scripts
+``` 
+
+## Tech Stack
+
+### Frontend
+
+*   **Framework:** Next.js (with React)
+*   **Language:** TypeScript
+*   **Styling:** Tailwind CSS with `shadcn/ui` components and `tailwindcss-animate`.
+*   **UI Components:** A combination of custom components and components from `shadcn/ui` which are built on top of Radix UI primitives.
+*   **Form Handling:** React Hook Form with Zod for validation.
+*   **Charting:** Recharts
+*   **Other notable libraries:** `lucide-react` for icons, `date-fns` for date manipulation, `next-themes` for theme management.
+
+### Backend
+
+*   **Framework:** Express.js
+*   **Language:** TypeScript
+*   **Database:** MongoDB (indicated by `mongoose`)
+*   **API:** RESTful API
+*   **Authentication:** JWT (JSON Web Tokens)
+*   **Real-time Communication:** Socket.IO
+*   **Integrations:**
+    *   Twilio for communication services.
+    *   Stripe for payments.
+    *   Nodemailer for sending emails.
+    *   Google APIs.
+    *   Anthropic AI SDK.
+*   **Other notable libraries:** `winston` for logging, `helmet` for security, `cors` for cross-origin resource sharing.
+
+### Tooling
+
+*   **Package Manager:** npm
+*   **Build Tool:** `tsc` (TypeScript Compiler) for the backend, Next.js build for the frontend.
+*   **Testing:** Jest
+*   **Development:** `ts-node-dev` for backend hot-reloading.
 ``` 
