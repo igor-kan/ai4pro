@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import PremiumButton from "@/components/ui/premium-button"
 
 interface AdCampaign {
   id: string
@@ -218,10 +219,13 @@ export default function BreezyAdsPage() {
           </div>
           <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
             <DialogTrigger asChild>
-              <Button className="flex items-center space-x-2">
+              <PremiumButton
+                feature="analytics"
+                className="flex items-center space-x-2"
+              >
                 <Plus className="h-4 w-4" />
                 <span>Create Campaign</span>
-              </Button>
+              </PremiumButton>
             </DialogTrigger>
             <DialogContent className="max-w-2xl">
               <DialogHeader>

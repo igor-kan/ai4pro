@@ -1,10 +1,19 @@
-import { Edit, Lock, LogOut } from "lucide-react"
+import { Edit, Lock, LogOut, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import SubscriptionStatus from "./subscription-status"
+import { useSubscription } from "../context/subscription-context"
 
 const AccountPage = () => {
+  const { subscription, isActive } = useSubscription()
+  
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-semibold text-gray-900 mb-8">Account</h1>
+      
+      {/* Subscription Status */}
+      <div className="mb-8">
+        <SubscriptionStatus />
+      </div>
 
       <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -38,8 +47,17 @@ const AccountPage = () => {
           <div className="flex items-center justify-between">
             <span className="text-gray-600">AI Number</span>
             <div className="flex items-center space-x-2">
-              <span className="text-gray-500 italic">Locked</span>
-              <Lock className="w-4 h-4 text-gray-400" />
+              {isActive ? (
+                <>
+                  <span className="text-gray-900">+1 (555) 123-4567</span>
+                  <Phone className="w-4 h-4 text-green-500" />
+                </>
+              ) : (
+                <>
+                  <span className="text-gray-500 italic">Locked - Upgrade Required</span>
+                  <Lock className="w-4 h-4 text-gray-400" />
+                </>
+              )}
             </div>
           </div>
         </div>

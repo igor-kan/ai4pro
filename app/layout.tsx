@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from './context/theme-context'
+import { SubscriptionProvider } from './context/subscription-context'
 
 export const metadata: Metadata = {
   title: 'AI4PRO Dashboard',
@@ -17,7 +18,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="transition-colors duration-300">
         <ThemeProvider>
-          {children}
+          <SubscriptionProvider>
+            {children}
+          </SubscriptionProvider>
         </ThemeProvider>
       </body>
     </html>

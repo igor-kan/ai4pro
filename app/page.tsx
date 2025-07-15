@@ -16,12 +16,13 @@ import BreezyCampaignsPage from "./components/breezy-campaigns-page"
 import CallCoachPage from "./components/call-coach-page"
 import SubscriptionBanner from "./components/subscription-banner"
 import TrialSignupPage from "./components/trial-signup-page"
+import { useSubscription } from "./context/subscription-context"
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState("instructions")
   const [activePanel, setActivePanel] = useState<string | null>(null)
   const [showSubscriptionBanner, setShowSubscriptionBanner] = useState(true)
-  const [userSubscription, setUserSubscription] = useState<any>(null)
+  const { subscription, isActive } = useSubscription()
 
   const handleStartTrial = () => {
     setCurrentPage("trial-signup")
@@ -92,7 +93,7 @@ export default function Dashboard() {
         <Header currentPage={currentPage} onPageChange={setCurrentPage} />
         
         {/* Subscription Banner */}
-        {showSubscriptionBanner && !userSubscription && currentPage !== "trial-signup" && (
+        {showSubscriptionBanner && !isActive && currentPage !== "trial-signup" && (
           <div className="px-6 pt-4">
             <SubscriptionBanner 
               onStartTrial={handleStartTrial}

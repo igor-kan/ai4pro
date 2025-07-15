@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import PremiumButton from "@/components/ui/premium-button"
 
 interface Message {
   id: string
@@ -215,9 +216,12 @@ export default function AskBreezyPage() {
                     <Mic className="h-4 w-4" />
                   </Button>
                 )}
-                <Button onClick={handleSendMessage}>
+                <PremiumButton
+                  feature="aiReceptionist"
+                  onClick={handleSendMessage}
+                >
                   <Send className="h-4 w-4" />
-                </Button>
+                </PremiumButton>
               </div>
             </CardContent>
           </Card>

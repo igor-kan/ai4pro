@@ -5,6 +5,7 @@ import { Mic, Bell, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { VoiceModal } from "./voice-modal"
 import { NotificationPreferencesPanel } from "./panels/notification-preferences-panel"
+import PremiumButton from "@/components/ui/premium-button"
 
 interface CallPageProps {
   onOpenPanel: (panel: string | null) => void
@@ -78,11 +79,23 @@ export default function CallPage({ onOpenPanel }: CallPageProps) {
           </a>
         </div>
 
-        <div className="mt-8 flex justify-center">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full">
+        <div className="mt-8 flex justify-center space-x-4">
+          <PremiumButton
+            feature="callTranscription"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
+          >
             <Phone className="w-4 h-4 mr-2" />
-            Preview
-          </Button>
+            Preview Call Handling
+          </PremiumButton>
+          
+          <PremiumButton
+            feature="aiReceptionist"
+            variant="outline"
+            className="px-8 py-3 rounded-full"
+          >
+            <Mic className="w-4 h-4 mr-2" />
+            Test AI Receptionist
+          </PremiumButton>
         </div>
       </div>
 

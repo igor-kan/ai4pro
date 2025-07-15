@@ -18,9 +18,9 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
   const menuItems = [
     { id: "instructions", icon: Bot, label: "Inbound AI" },
     { id: "ask-breezy", icon: HelpCircle, label: "Ask Breezy" },
-    { id: "breezy-ads", icon: Megaphone, label: "Breezy Ads" },
-    { id: "breezy-campaigns", icon: Zap, label: "Breezy Campaigns" },
-    { id: "call-coach", icon: Headphones, label: "Call Coach" },
+    { id: "breezy-ads", icon: Megaphone, label: "Ads" },
+    { id: "breezy-campaigns", icon: Zap, label: "Campaigns" },
+    { id: "call-coach", icon: Headphones, label: "Coach" },
     { id: "threads", icon: MessageSquare, label: "Threads" },
     { id: "dialer", icon: Phone, label: "Dialer" },
     { id: "mission-control", icon: Command, label: "Mission Control" },

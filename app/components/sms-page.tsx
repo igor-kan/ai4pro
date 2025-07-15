@@ -4,6 +4,7 @@ import { useState } from "react"
 import { MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SMSAutoResponsesPanel } from "./panels/sms-auto-responses-panel"
+import PremiumButton from "@/components/ui/premium-button"
 
 interface SMSPageProps {
   onOpenPanel: (panel: string | null) => void
@@ -69,10 +70,13 @@ export default function SMSPage({ onOpenPanel }: SMSPageProps) {
         </div>
 
         <div className="mt-8 flex justify-center">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full">
+          <PremiumButton
+            feature="unlimitedSMS"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
+          >
             <MessageSquare className="w-4 h-4 mr-2" />
-            Preview
-          </Button>
+            Preview SMS Features
+          </PremiumButton>
         </div>
       </div>
 
