@@ -13,7 +13,7 @@ import SMSPage from "./components/sms-page"
 import AskBreezyPage from "./components/ask-breezy-page"
 import BreezyAdsPage from "./components/breezy-ads-page"
 import BreezyCampaignsPage from "./components/breezy-campaigns-page"
-import BreezyKaraokePage from "./components/breezy-karaoke-page"
+import CallCoachPage from "./components/call-coach-page"
 import SubscriptionBanner from "./components/subscription-banner"
 import TrialSignupPage from "./components/trial-signup-page"
 
@@ -66,8 +66,8 @@ export default function Dashboard() {
         return <BreezyAdsPage />
       case "breezy-campaigns":
         return <BreezyCampaignsPage />
-      case "breezy-karaoke":
-        return <BreezyKaraokePage />
+      case "call-coach":
+        return <CallCoachPage />
       case "trial-signup":
         return <TrialSignupPage onStartStripeCheckout={handleStartStripeCheckout} />
       default:

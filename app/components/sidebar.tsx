@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Bot, MessageSquare, Phone, Command, Settings, HelpCircle, Megaphone, Zap, Music } from "lucide-react"
+import { Bot, MessageSquare, Phone, Command, Settings, HelpCircle, Megaphone, Zap, Headphones } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface SidebarProps {
@@ -17,7 +17,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
     { id: "ask-breezy", icon: HelpCircle, label: "Ask Breezy" },
     { id: "breezy-ads", icon: Megaphone, label: "Breezy Ads" },
     { id: "breezy-campaigns", icon: Zap, label: "Breezy Campaigns" },
-    { id: "breezy-karaoke", icon: Music, label: "Breezy Karaoke" },
+    { id: "call-coach", icon: Headphones, label: "Call Coach" },
     { id: "threads", icon: MessageSquare, label: "Threads" },
     { id: "dialer", icon: Phone, label: "Dialer" },
     { id: "mission-control", icon: Command, label: "Mission Control" },
