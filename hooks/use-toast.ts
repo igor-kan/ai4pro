@@ -1,3 +1,20 @@
+/**
+ * Toast Notification Hook
+ * 
+ * A comprehensive toast notification system inspired by react-hot-toast.
+ * Provides a global state management solution for displaying temporary notifications
+ * throughout the application with support for different types, actions, and automatic dismissal.
+ * 
+ * Features:
+ * - Global toast state management with React Context
+ * - Multiple toast types (default, destructive, success, etc.)
+ * - Automatic dismissal with configurable delays
+ * - Custom actions and interactive elements
+ * - Queue management with limits
+ * - Programmatic control (add, update, dismiss, remove)
+ * - Type-safe implementation with TypeScript
+ */
+
 "use client"
 
 // Inspired by react-hot-toast library
@@ -8,25 +25,41 @@ import type {
   ToastProps,
 } from "@/components/ui/toast"
 
-const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+// Toast system configuration
+const TOAST_LIMIT = 1                          // Maximum number of toasts to show at once
+const TOAST_REMOVE_DELAY = 1000000            // Delay before removing dismissed toasts
 
+/**
+ * Extended toast interface with additional properties
+ * Includes all base toast props plus ID and content elements
+ */
 type ToasterToast = ToastProps & {
-  id: string
-  title?: React.ReactNode
-  description?: React.ReactNode
-  action?: ToastActionElement
+  id: string                                   // Unique identifier for the toast
+  title?: React.ReactNode                      // Toast title content
+  description?: React.ReactNode                // Toast description content
+  action?: ToastActionElement                  // Optional action button/element
 }
 
+/**
+ * Action type constants for toast state management
+ * Defines all possible actions that can be performed on the toast state
+ */
 const actionTypes = {
-  ADD_TOAST: "ADD_TOAST",
-  UPDATE_TOAST: "UPDATE_TOAST",
-  DISMISS_TOAST: "DISMISS_TOAST",
-  REMOVE_TOAST: "REMOVE_TOAST",
+  ADD_TOAST: "ADD_TOAST",                     // Add a new toast to the queue
+  UPDATE_TOAST: "UPDATE_TOAST",               // Update an existing toast
+  DISMISS_TOAST: "DISMISS_TOAST",             // Mark a toast as dismissed
+  REMOVE_TOAST: "REMOVE_TOAST",               // Remove a toast from state
 } as const
 
+// Global counter for generating unique toast IDs
 let count = 0
 
+/**
+ * Generates unique toast IDs
+ * Uses a simple incrementing counter with safe integer limits
+ * 
+ * @returns A unique string ID for the toast
+ */
 function genId() {
   count = (count + 1) % Number.MAX_SAFE_INTEGER
   return count.toString()
@@ -34,6 +67,10 @@ function genId() {
 
 type ActionType = typeof actionTypes
 
+/**
+ * Toast action union type
+ * Defines all possible actions that can be dispatched to the toast reducer
+ */
 type Action =
   | {
       type: ActionType["ADD_TOAST"]

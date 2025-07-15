@@ -1,3 +1,22 @@
+/**
+ * Sidebar Navigation Component
+ * 
+ * The main navigation sidebar that provides:
+ * - Expandable/collapsible navigation menu
+ * - Theme-aware styling with glass/ordinary variants
+ * - Theme toggle controls (light/dark + glass/ordinary)
+ * - Navigation between all dashboard pages
+ * - Responsive hover effects and animations
+ * - Visual indicators for active page
+ * 
+ * Features:
+ * - Glass UI: Glassmorphism effects with backdrop blur and transparency
+ * - Ordinary UI: Solid backgrounds with clean borders
+ * - Smooth transitions for expand/collapse animations
+ * - Icon-based navigation with optional labels
+ * - Theme toggle switches at the bottom
+ */
+
 "use client"
 
 import { useState } from "react"
@@ -6,15 +25,33 @@ import { cn } from "@/lib/utils"
 import { useTheme } from "../context/theme-context"
 import { ToggleSwitch } from "@/components/ui/toggle-switch"
 
+/**
+ * Sidebar Props Interface
+ */
 interface SidebarProps {
-  currentPage: string
-  onPageChange: (page: string) => void
+  currentPage: string                           // Currently active page identifier
+  onPageChange: (page: string) => void         // Callback for page navigation
 }
 
+/**
+ * Sidebar Component
+ * 
+ * Renders the main navigation sidebar with theme-aware styling and animations.
+ * Supports both glass and ordinary UI modes with different visual treatments.
+ * 
+ * @param currentPage - The currently active page
+ * @param onPageChange - Function to handle page navigation
+ */
 export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
+  // State for sidebar expand/collapse
   const [isExpanded, setIsExpanded] = useState(false)
+  // Theme context for styling and toggle functionality
   const { theme, uiStyle, toggleTheme, toggleUIStyle } = useTheme()
 
+  /**
+   * Navigation menu items configuration
+   * Each item contains an ID, icon component, and display label
+   */
   const menuItems = [
     { id: "instructions", icon: Bot, label: "Inbound AI" },
     { id: "ask-breezy", icon: HelpCircle, label: "Ask Breezy" },
@@ -27,9 +64,15 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
     { id: "account", icon: Settings, label: "Account" },
   ]
 
+  // Theme state helpers
   const isGlass = uiStyle === 'glass'
   const isDark = theme === 'dark'
 
+  /**
+   * Dynamic sidebar styling based on theme and expansion state
+   * Glass mode: Glassmorphism with backdrop blur and transparency
+   * Ordinary mode: Solid backgrounds with clean borders
+   */
   const sidebarClasses = cn(
     "relative flex flex-col py-6 transition-all duration-500 ease-out shadow-2xl",
     "before:absolute before:inset-0 before:pointer-events-none",
@@ -49,10 +92,17 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         )
   )
 
+  /**
+   * Logo container styling variants
+   */
   const logoClasses = isGlass 
     ? "w-10 h-10 relative"
     : "w-8 h-8 rounded flex items-center justify-center flex-shrink-0"
 
+  /**
+   * Menu item styling function
+   * Returns appropriate classes based on active state and theme
+   */
   const menuItemClasses = (isActive: boolean) => cn(
     "group relative flex items-center space-x-3 p-3 transition-all duration-300 ease-out text-left w-full overflow-hidden",
     isGlass

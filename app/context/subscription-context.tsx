@@ -1,47 +1,89 @@
+/**
+ * Subscription Context Provider
+ * 
+ * Manages user subscription state throughout the application including:
+ * - Subscription plans and status tracking
+ * - Trial period management (7-day trials)
+ * - Feature access control based on subscription status
+ * - Persistent storage of subscription data
+ * - Subscription lifecycle management (start, cancel, expire)
+ * 
+ * Subscription States:
+ * - 'active': Paid subscription with full feature access
+ * - 'trial': 7-day trial period with limited features
+ * - 'inactive': No active subscription
+ * - 'expired': Subscription or trial has expired
+ */
+
 "use client"
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
+/**
+ * Subscription Data Interface
+ * Defines the structure of subscription information
+ */
 interface Subscription {
-  id: string
-  plan: string
-  status: 'active' | 'inactive' | 'trial' | 'expired'
-  expiresAt?: Date
-  features: string[]
+  id: string                                    // Unique subscription identifier
+  plan: string                                  // Plan type (trial, basic, pro, etc.)
+  status: 'active' | 'inactive' | 'trial' | 'expired'  // Current subscription status
+  expiresAt?: Date                             // Optional expiration date
+  features: string[]                           // Array of enabled features for this subscription
 }
 
+/**
+ * Subscription Context Interface
+ * Provides all subscription management functionality
+ */
 interface SubscriptionContextType {
-  subscription: Subscription | null
-  isActive: boolean
-  isTrialActive: boolean
-  setSubscription: (subscription: Subscription | null) => void
-  startTrial: () => void
-  cancelSubscription: () => void
+  subscription: Subscription | null            // Current subscription data or null
+  isActive: boolean                            // Whether user has any active subscription
+  isTrialActive: boolean                       // Whether user is in trial period
+  setSubscription: (subscription: Subscription | null) => void  // Direct subscription setter
+  startTrial: () => void                       // Initialize 7-day trial
+  cancelSubscription: () => void               // Cancel current subscription
 }
 
+// Create the subscription context
 const SubscriptionContext = createContext<SubscriptionContextType | undefined>(undefined)
 
+/**
+ * Subscription Provider Component
+ * 
+ * Manages subscription state and provides subscription-related functionality.
+ * Features:
+ * - Persistent storage in localStorage with error handling
+ * - Automatic trial period calculation
+ * - Feature access control
+ * - Subscription lifecycle management
+ * 
+ * @param children - React nodes to wrap with subscription context
+ */
 export function SubscriptionProvider({ children }: { children: React.ReactNode }) {
+  // Current subscription state
   const [subscription, setSubscription] = useState<Subscription | null>(null)
 
+  // Load subscription data from localStorage on mount
   useEffect(() => {
-    // Load saved subscription from localStorage
     const savedSubscription = localStorage.getItem('subscription')
     if (savedSubscription) {
       try {
         const parsed = JSON.parse(savedSubscription)
+        // Convert expiration date string back to Date object
         if (parsed.expiresAt) {
           parsed.expiresAt = new Date(parsed.expiresAt)
         }
         setSubscription(parsed)
       } catch (error) {
         console.error('Error parsing saved subscription:', error)
+        // Clear corrupted data
+        localStorage.removeItem('subscription')
       }
     }
   }, [])
 
+  // Persist subscription changes to localStorage
   useEffect(() => {
-    // Save subscription to localStorage
     if (subscription) {
       localStorage.setItem('subscription', JSON.stringify(subscription))
     } else {
@@ -49,9 +91,14 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
     }
   }, [subscription])
 
+  // Computed values for subscription status
   const isActive = subscription?.status === 'active' || subscription?.status === 'trial'
   const isTrialActive = subscription?.status === 'trial'
 
+  /**
+   * Start 7-day trial subscription
+   * Creates a new trial subscription with basic features enabled
+   */
   const startTrial = () => {
     const trialSubscription: Subscription = {
       id: 'trial-' + Date.now(),
@@ -63,6 +110,10 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
     setSubscription(trialSubscription)
   }
 
+  /**
+   * Cancel current subscription
+   * Removes subscription data and returns user to free tier
+   */
   const cancelSubscription = () => {
     setSubscription(null)
   }
@@ -81,6 +132,15 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
   )
 }
 
+/**
+ * Custom hook for accessing subscription context
+ * 
+ * Provides type-safe access to subscription state and management functions.
+ * Must be used within a SubscriptionProvider component.
+ * 
+ * @throws Error if used outside of SubscriptionProvider
+ * @returns SubscriptionContextType with all subscription management functions
+ */
 export function useSubscription() {
   const context = useContext(SubscriptionContext)
   if (context === undefined) {

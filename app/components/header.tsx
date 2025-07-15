@@ -1,3 +1,21 @@
+/**
+ * Header Component
+ * 
+ * The main application header that provides:
+ * - Dynamic page titles and context
+ * - Tab navigation for related pages (Instructions, Call, SMS)
+ * - Theme-aware styling with glassmorphism effects
+ * - Premium feature indicators and upgrade prompts
+ * - Responsive layout with proper visual hierarchy
+ * 
+ * Features:
+ * - Glass UI: Glassmorphism with backdrop blur and gradient overlays
+ * - Ordinary UI: Clean solid backgrounds with borders
+ * - Conditional tab display based on current page
+ * - Premium feature lock indicators
+ * - Smooth theme transitions
+ */
+
 "use client"
 
 import { X, Lock } from "lucide-react"
@@ -5,16 +23,32 @@ import { Button } from "@/components/ui/button"
 import { useTheme } from "../context/theme-context"
 import { cn } from "@/lib/utils"
 
+/**
+ * Header Props Interface
+ */
 interface HeaderProps {
-  currentPage?: string
-  onPageChange?: (page: string) => void
+  currentPage?: string                          // Current active page identifier
+  onPageChange?: (page: string) => void        // Callback for tab navigation
 }
 
+/**
+ * Header Component
+ * 
+ * Renders the application header with theme-aware styling and conditional navigation.
+ * Shows tab navigation for related pages and provides visual context for the current section.
+ * 
+ * @param currentPage - The currently active page
+ * @param onPageChange - Function to handle tab navigation
+ */
 export function Header({ currentPage, onPageChange }: HeaderProps) {
+  // Theme context for styling
   const { theme, uiStyle } = useTheme()
+  
+  // Show tab navigation only for core communication pages
   const showTabs = currentPage === "instructions" || currentPage === "call" || currentPage === "sms"
   const tabs = ["Instructions", "Call", "SMS"]
 
+  // Theme state helpers
   const isGlass = uiStyle === 'glass'
   const isDark = theme === 'dark'
 
@@ -34,10 +68,12 @@ export function Header({ currentPage, onPageChange }: HeaderProps) {
               : "bg-white border-gray-200"
           )
     )}>
+      {/* Glass UI gradient overlay */}
       {isGlass && (
         <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none dark:from-gray-700/10"></div>
       )}
       
+      {/* Main header content with premium styling */}
       <div className={cn(
         "relative px-6 py-3 flex items-center justify-between",
         isGlass
