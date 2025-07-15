@@ -9,8 +9,15 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "relative rounded-3xl border border-white/30 bg-white/20 backdrop-blur-xl shadow-2xl text-card-foreground overflow-hidden",
-      "before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 before:to-transparent before:pointer-events-none",
+      "relative text-card-foreground overflow-hidden transition-all duration-300",
+      // Glass UI styles
+      "glass-ui:rounded-3xl glass-ui:border glass-ui:border-white/30 glass-ui:bg-white/20 glass-ui:backdrop-blur-xl glass-ui:shadow-2xl",
+      "glass-ui:before:absolute glass-ui:before:inset-0 glass-ui:before:bg-gradient-to-br glass-ui:before:from-white/20 glass-ui:before:to-transparent glass-ui:before:pointer-events-none",
+      // Glass dark theme
+      "glass-ui:dark:border-gray-700/30 glass-ui:dark:bg-gray-800/20 glass-ui:dark:before:from-gray-700/20",
+      // Ordinary UI styles
+      "rounded-lg border bg-card shadow-sm",
+      "dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100",
       className
     )}
     {...props}
@@ -25,8 +32,13 @@ const CardHeader = React.forwardRef<
   <div 
     ref={ref} 
     className={cn(
-      "relative flex flex-col space-y-1.5 p-6 pb-4 backdrop-blur-sm",
-      "after:absolute after:bottom-0 after:left-6 after:right-6 after:h-px after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent",
+      "relative flex flex-col space-y-1.5 p-6 pb-4 transition-all duration-300",
+      // Glass UI styles
+      "glass-ui:backdrop-blur-sm",
+      "glass-ui:after:absolute glass-ui:after:bottom-0 glass-ui:after:left-6 glass-ui:after:right-6 glass-ui:after:h-px glass-ui:after:bg-gradient-to-r glass-ui:after:from-transparent glass-ui:after:via-white/30 glass-ui:after:to-transparent",
+      "glass-ui:dark:after:via-gray-600/30",
+      // Ordinary UI styles
+      "border-b border-gray-200 dark:border-gray-700",
       className
     )} 
     {...props} 
@@ -40,7 +52,11 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("font-semibold leading-none tracking-tight text-gray-800", className)}
+    className={cn(
+      "font-semibold leading-none tracking-tight transition-colors duration-300",
+      "text-gray-800 dark:text-gray-100",
+      className
+    )}
     {...props}
   />
 ))
@@ -52,7 +68,11 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("text-sm text-gray-600", className)}
+    className={cn(
+      "text-sm transition-colors duration-300",
+      "text-gray-600 dark:text-gray-400",
+      className
+    )}
     {...props}
   />
 ))
@@ -73,8 +93,13 @@ const CardFooter = React.forwardRef<
   <div 
     ref={ref} 
     className={cn(
-      "relative flex items-center p-6 pt-4 backdrop-blur-sm",
-      "before:absolute before:top-0 before:left-6 before:right-6 before:h-px before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent",
+      "relative flex items-center p-6 pt-4 transition-all duration-300",
+      // Glass UI styles
+      "glass-ui:backdrop-blur-sm",
+      "glass-ui:before:absolute glass-ui:before:top-0 glass-ui:before:left-6 glass-ui:before:right-6 glass-ui:before:h-px glass-ui:before:bg-gradient-to-r glass-ui:before:from-transparent glass-ui:before:via-white/30 glass-ui:before:to-transparent",
+      "glass-ui:dark:before:via-gray-600/30",
+      // Ordinary UI styles
+      "border-t border-gray-200 dark:border-gray-700",
       className
     )} 
     {...props} 

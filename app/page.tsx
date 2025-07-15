@@ -76,16 +76,19 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="flex h-screen relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100"></div>
-      <div className="absolute inset-0 bg-gradient-to-tr from-blue-200/30 via-transparent to-purple-200/30"></div>
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-pink-300/10 to-blue-300/10 rounded-full blur-3xl animate-spin" style={{ animationDuration: '20s' }}></div>
+    <div className="flex h-screen relative overflow-hidden transition-colors duration-300">
+      {/* Animated Background - Glass UI only */}
+      <div className="glass-ui:block hidden absolute inset-0 bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 dark:from-gray-900 dark:via-purple-950 dark:to-blue-950"></div>
+      <div className="glass-ui:block hidden absolute inset-0 bg-gradient-to-tr from-blue-200/30 via-transparent to-purple-200/30 dark:from-blue-800/20 dark:via-transparent dark:to-purple-800/20"></div>
+      <div className="glass-ui:block hidden absolute top-0 left-1/4 w-96 h-96 bg-blue-400/20 dark:bg-blue-600/10 rounded-full blur-3xl animate-pulse"></div>
+      <div className="glass-ui:block hidden absolute bottom-0 right-1/4 w-96 h-96 bg-purple-400/20 dark:bg-purple-600/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div className="glass-ui:block hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-pink-300/10 to-blue-300/10 dark:from-pink-800/5 dark:to-blue-800/5 rounded-full blur-3xl animate-spin" style={{ animationDuration: '20s' }}></div>
+      
+      {/* Ordinary Background */}
+      <div className="glass-ui:hidden block absolute inset-0 bg-gray-50 dark:bg-gray-900"></div>
       
       <Sidebar currentPage={currentPage} onPageChange={setCurrentPage} />
-      <div className="flex-1 flex flex-col backdrop-blur-sm">
+      <div className="flex-1 flex flex-col glass-ui:backdrop-blur-sm">
         <Header currentPage={currentPage} onPageChange={setCurrentPage} />
         
         {/* Subscription Banner */}
@@ -105,7 +108,7 @@ export default function Dashboard() {
 
       {/* Backdrop */}
       {activePanel && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40" onClick={() => setActivePanel(null)} />
+        <div className="fixed inset-0 glass-ui:bg-black/20 glass-ui:backdrop-blur-sm bg-black/50 z-40" onClick={() => setActivePanel(null)} />
       )}
     </div>
   )
