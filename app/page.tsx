@@ -10,6 +10,9 @@ import AccountPage from "./components/account-page"
 import MissionControlPage from "./components/mission-control-page"
 import DialerPage from "./components/dialer-page"
 import SMSPage from "./components/sms-page"
+import AskBreezyPage from "./components/ask-breezy-page"
+import BreezyAdsPage from "./components/breezy-ads-page"
+import BreezyCampaignsPage from "./components/breezy-campaigns-page"
 
 export default function Dashboard() {
   const [currentPage, setCurrentPage] = useState("instructions")
@@ -31,6 +34,12 @@ export default function Dashboard() {
         return <MissionControlPage />
       case "account":
         return <AccountPage />
+      case "ask-breezy":
+        return <AskBreezyPage />
+      case "breezy-ads":
+        return <BreezyAdsPage />
+      case "breezy-campaigns":
+        return <BreezyCampaignsPage />
       default:
         return <InstructionsPage onOpenPanel={setActivePanel} />
     }
